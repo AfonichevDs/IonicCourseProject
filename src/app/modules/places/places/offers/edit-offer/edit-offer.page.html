@@ -1,13 +1,36 @@
 <ion-header>
-    <ion-toolbar>
-      <ion-buttons slot="start">
-        <ion-back-button [defaultHref]="'/places/tabs/offers' + place.id"></ion-back-button>
-      </ion-buttons>
-      <ion-title>Edit Offer</ion-title>
-    </ion-toolbar>
-  </ion-header>
-  
-  <ion-content padding>
-    <ion-button color="primary" class="ion-margin" (click)="onChooseOffer()">Book</ion-button>
-    <ion-img [src]="place.imageUrl"></ion-img>
-  </ion-content>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button [defaultHref]="'/places/tabs/offers' + place.id"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Edit Offer</ion-title>
+    <ion-buttons slot="primary">
+      <ion-button (click)="onEditOffer()" [disabled]="!form.valid">
+          <ion-icon name="checkmark" slot="icon-only"></ion-icon>
+      </ion-button>
+  </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+  <form [formGroup]="form">
+    <ion-grid>
+      <ion-row>
+        <ion-col sizeSm="6" offsetSm="3">
+          <ion-item>
+            <ion-input type="text" autocomplete autocorrect aria-label="title" formControlName="title" label="Title"
+              labelPlacement="floating"></ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col sizeSm="6" offsetSm="3">
+          <ion-item>
+            <ion-textarea type="text" rows="1" aria-label="description" formControlName="description"
+              label="Description" labelPlacement="floating"></ion-textarea>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </form>
+</ion-content>

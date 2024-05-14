@@ -4,19 +4,81 @@
             <ion-back-button defaultHref="/places/tabs/offers"></ion-back-button>
         </ion-buttons>
         <ion-title>New Offer</ion-title>
+        <ion-buttons slot="primary">
+            <ion-button (click)="onCreateOffer()" [disabled]="!form.valid">
+                <ion-icon name="checkmark" slot="icon-only"></ion-icon>
+            </ion-button>
+        </ion-buttons>
     </ion-toolbar>
 </ion-header>
 
 <ion-content>
-    <ion-grid>
-        <ion-row class="ion-align-items-center ion-justify-content-end">
-            <ion-col size="4" style="border: 1px solid red;">
-                Row 1 col1
-            </ion-col>
-            <ion-col size="4" style="border: 1px solid red;">
-               <h1>Header</h1>
-               <p>Text</p>
-            </ion-col>
-        </ion-row>
-    </ion-grid>
+    <form [formGroup]="form">
+        <ion-grid>
+            <ion-row>
+                <ion-col size-sm="6" offset-sm="3">
+                    <ion-item>
+                        <ion-input type="text" autocomplete autocorrect aria-label="title" formControlName="title"
+                            label="Title" labelPlacement="floating"></ion-input>
+                    </ion-item>
+                </ion-col>
+            </ion-row>
+            <ion-row>
+                <ion-col size-sm="6" offset-sm="3">
+                    <ion-item>
+                        <ion-textarea type="text" rows="1" aria-label="description" formControlName="description"
+                            label="Description" labelPlacement="floating"></ion-textarea>
+                    </ion-item>
+                </ion-col>
+            </ion-row>
+            @if (!form.get('description')!.valid && form.get('description')!.touched) {
+            <ion-row>
+                <ion-col size-sm="6" offset-sm="3">
+                    <ion-item>
+                        <p>Description should be between 1 and 180 characters.</p>
+                    </ion-item>
+                </ion-col>
+            </ion-row>
+            }
+            <ion-row>
+                <ion-col size-sm="3" offset-sm="3">
+                    <ion-item>
+                        <ion-input type="number" aria-label="price" formControlName="price" label="Price"
+                            labelPlacement="floating"></ion-input>
+                    </ion-item>
+                </ion-col>
+            </ion-row>
+            <ion-row>
+                <ion-col size-sm="3" offset-sm="3">
+                    <ion-item>
+                        <ion-label class="ion-text-center" position="floating">Available From</ion-label>
+                    </ion-item>
+                </ion-col>
+                <ion-col size-sm="3">
+                    <ion-item>
+                        <ion-label class="ion-text-center" position="floating">Available To</ion-label>
+                    </ion-item>
+                </ion-col>
+            </ion-row>
+            <ion-row>
+                <ion-col size-sm="3" offset-sm="3">
+                    <ion-datetime-button datetime="datetimeFrom"></ion-datetime-button>
+                </ion-col>
+                <ion-col size-sm="3">
+                    <ion-datetime-button datetime="datetimeTo"></ion-datetime-button>
+                </ion-col>
+            </ion-row>
+        </ion-grid>
+        <ion-modal [keepContentsMounted]="true">
+            <ng-template>
+                <ion-datetime id="datetimeFrom" presentation="date" formControlName="dateFrom"></ion-datetime>
+            </ng-template>
+        </ion-modal>
+
+        <ion-modal [keepContentsMounted]="true">
+            <ng-template>
+                <ion-datetime id="datetimeTo" presentation="date" formControlName="dateTo"></ion-datetime>
+            </ng-template>
+        </ion-modal>
+    </form>
 </ion-content>
