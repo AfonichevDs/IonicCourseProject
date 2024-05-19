@@ -1,0 +1,13 @@
+
+@if(!dateControl.value) {
+    <ion-button fill="clear" (click)="openCalendar()">{{placeholder}}</ion-button>
+}
+
+<ion-datetime-button datetime="{{ id }}" [class.d-none]="!dateControl.value"></ion-datetime-button>
+
+<ion-modal [keepContentsMounted]="true" [isOpen]="showCalendar$ | async" (didDismiss)="cancelCalendar()">
+    <ng-template>
+        <ion-datetime id="{{ id }}" presentation="date" formControlName="dateControl" [preferWheel]="true"
+            (ionChange)="dateFromChanged($event)"></ion-datetime>
+    </ng-template>
+</ion-modal>

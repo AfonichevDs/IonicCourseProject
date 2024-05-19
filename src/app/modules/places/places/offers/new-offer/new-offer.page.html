@@ -51,34 +51,26 @@
             <ion-row>
                 <ion-col size-sm="3" offset-sm="3">
                     <ion-item>
-                        <ion-label class="ion-text-center" position="floating">Available From</ion-label>
+                        <date-time-button [id]="'dateFrom'" [placeholder]="'Available From'" formControlName="dateFrom"></date-time-button>
                     </ion-item>
                 </ion-col>
                 <ion-col size-sm="3">
                     <ion-item>
-                        <ion-label class="ion-text-center" position="floating">Available To</ion-label>
+                        <date-time-button [id]="'dateTo'" [placeholder]="'Available To'" formControlName="dateTo"></date-time-button>
                     </ion-item>
                 </ion-col>
             </ion-row>
-            <ion-row>
-                <ion-col size-sm="3" offset-sm="3">
-                    <ion-datetime-button datetime="datetimeFrom"></ion-datetime-button>
-                </ion-col>
-                <ion-col size-sm="3">
-                    <ion-datetime-button datetime="datetimeTo"></ion-datetime-button>
-                </ion-col>
-            </ion-row>
         </ion-grid>
-        <ion-modal [keepContentsMounted]="true">
+        <!-- <ion-modal [keepContentsMounted]="true" [isOpen]="showCalendar" (didDismiss)="cancelCalendar()">
             <ng-template>
-                <ion-datetime id="datetimeFrom" presentation="date" formControlName="dateFrom"></ion-datetime>
+                <ion-datetime id="datetimeFrom" presentation="date" formControlName="dateFrom" [preferWheel]="true" (ionChange)="dateFromChanged($event)"></ion-datetime>
             </ng-template>
         </ion-modal>
 
         <ion-modal [keepContentsMounted]="true">
             <ng-template>
-                <ion-datetime id="datetimeTo" presentation="date" formControlName="dateTo"></ion-datetime>
+                <ion-datetime id="datetimeTo" presentation="date" formControlName="dateTo" [preferWheel]="true"></ion-datetime>
             </ng-template>
-        </ion-modal>
+        </ion-modal> -->
     </form>
 </ion-content>

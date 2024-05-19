@@ -62,7 +62,8 @@ export class PlaceDetailPage implements OnInit {
         this.modalCtrl.create({
             component: CreateBookingComponent,
             componentProps: {
-                place: this.place
+                place: this.place,
+                mode: mode
             }
         }).then(modalEl => {
             modalEl.present();
@@ -70,7 +71,7 @@ export class PlaceDetailPage implements OnInit {
         })
         .then(resultData => {
             if(resultData.role === 'confirm') {
-                alert(resultData.data.message);
+                console.log(resultData.data);
             }
         });
     }
