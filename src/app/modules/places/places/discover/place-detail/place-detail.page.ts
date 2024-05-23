@@ -1,9 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, DestroyRef, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ActionSheetController, IonicModule, ModalController, NavController } from '@ionic/angular';
 import { Place } from 'src/app/models/place.model';
 import { PlacesService } from 'src/app/services/places/places.service';
 import { CreateBookingComponent } from '../../../components/create-booking/create-booking.component';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { filter } from 'rxjs';
 
 @Component({
     selector: 'app-place-detail',
@@ -20,6 +22,7 @@ export class PlaceDetailPage implements OnInit {
         private route: ActivatedRoute,
         private placesService: PlacesService,
         private modalCtrl: ModalController,
+        private destroyRef: DestroyRef,
         private actionSheetCtrl: ActionSheetController) { }
 
     ngOnInit() {
@@ -28,7 +31,13 @@ export class PlaceDetailPage implements OnInit {
                 this.navCtrl.navigateBack('/places/tabs/offers');
                 return;
             }
-            this.place = this.placesService.getPlace(paramMap.get('placeId')!);
+
+            this.placesService.getPlace(paramMap.get('placeId')!).pipe(
+                takeUntilDestroyed(this.destroyRef),
+                filter(data => data !== null)
+            ).subscribe(place => {
+                this.place = place!;
+            });
         });
     }
 
@@ -69,10 +78,10 @@ export class PlaceDetailPage implements OnInit {
             modalEl.present();
             return modalEl.onDidDismiss();
         })
-        .then(resultData => {
-            if(resultData.role === 'confirm') {
-                console.log(resultData.data);
-            }
-        });
+            .then(resultData => {
+                if (resultData.role === 'confirm') {
+                    console.log(resultData.data);
+                }
+            });
     }
 }

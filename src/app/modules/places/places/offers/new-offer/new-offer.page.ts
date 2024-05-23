@@ -3,6 +3,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
+import { OffersService } from 'src/app/services/offers/offers.service';
 import { PlacesService } from 'src/app/services/places/places.service';
 import { DateTimeButtonComponent } from 'src/app/shared/components/date-time-button/date-time-button.component';
 
@@ -22,7 +23,7 @@ export class NewOfferPage implements OnInit {
 
     showCalendar: boolean;
 
-    constructor(private readonly placesSevice: PlacesService,
+    constructor(private readonly offersService: OffersService,
         private readonly router: Router
     ) { }
 
@@ -56,9 +57,8 @@ export class NewOfferPage implements OnInit {
         if (!this.form.valid) {
             return;
         }
-        console.log(this.form.value);
 
-        this.placesSevice.addPlace(
+        this.offersService.addOffer(
             this.form.value.title,
             this.form.value.description,
             this.form.value.price,
@@ -81,7 +81,6 @@ export class NewOfferPage implements OnInit {
     }
 
     get dateFromControl(): AbstractControl<any, any> | null {
-        var t = this.form.get('dateFrom')?.value;
         return this.form.get('dateFrom');
     }
 }

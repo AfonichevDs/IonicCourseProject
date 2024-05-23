@@ -1,17 +1,18 @@
 import { Injectable } from '@angular/core';
 import { Place } from 'src/app/models/place.model';
 import { AuthService } from '../auth/auth.service';
+import { BehaviorSubject, Observable, filter, map, take } from 'rxjs';
 
 @Injectable({
     providedIn: 'root'
 })
 export class PlacesService {
 
-    constructor(private readonly authService: AuthService) {}
+    constructor(private readonly authService: AuthService) { }
 
     private defaultImg = 'https://static.wikia.nocookie.net/silent/images/b/b7/Toluca_Lake_View_Hotel.jpg';
 
-    private _places: Place[] = [
+    private _places = new BehaviorSubject<Place[]>([
         new Place(
             'p1',
             'Hachijo Royal Resort',
@@ -32,18 +33,19 @@ export class PlacesService {
             new Date('2024-12-31'),
             '1'
         )
-    ];
+    ]);
 
-    get places() {
-        return [...this._places]; //TO DO: try to look up to Signals
+    get places$() {
+        return this._places.asObservable(); //TO DO: try to look up to Signals
     }
 
-    public getPlace(id: string): Place {
-        return {
-            ...this._places.find(
-                p => p.id === id
-            )!
-        };
+    public getPlace(id: string): Observable<Place | null> {
+        return this._places.pipe(
+            take(1),
+            map((places) => {
+                return places.find(p => p.id === id) ?? null;
+            })
+        )
     }
 
     public addPlace(title: string, description: string, price: number, dateFrom: Date, dateTo: Date) {
@@ -58,6 +60,6 @@ export class PlacesService {
             this.authService.userId
         );
 
-        this.places.push(newPlace);
+        this._places.next(this._places.value.concat(newPlace));
     }
 }

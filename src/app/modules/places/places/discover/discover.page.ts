@@ -1,5 +1,6 @@
 import { CommonModule, CurrencyPipe } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, DestroyRef, OnInit, WritableSignal, signal } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { RouterLink } from '@angular/router';
 import { IonicModule, MenuController, SegmentChangeEventDetail } from '@ionic/angular';
 import { Place } from 'src/app/models/place.model';
@@ -18,11 +19,16 @@ import { PlacesService } from 'src/app/services/places/places.service';
     styleUrls: ['./discover.page.scss'],
 })
 export class DiscoverPage implements OnInit {
-    public loadedPlaces: Place[];
-    constructor(private placesService: PlacesService, private menuCtrl: MenuController) { }
+    public loadedPlaces: WritableSignal<Place[]> = signal([]);
+    constructor(private placesService: PlacesService, private menuCtrl: MenuController, private destroyRef: DestroyRef) { }
 
     ngOnInit() {
-        this.loadedPlaces = this.placesService.places;
+
+        this.placesService.places$.pipe(
+            takeUntilDestroyed(this.destroyRef)
+        ).subscribe((places) => {
+            this.loadedPlaces.set(places);
+        })
     }
 
     public onFilterUpdate(event: CustomEvent<SegmentChangeEventDetail>) {
