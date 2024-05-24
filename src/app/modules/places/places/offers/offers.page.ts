@@ -1,11 +1,14 @@
 import { CurrencyPipe } from '@angular/common';
-import { Component, DestroyRef, OnInit, WritableSignal, signal } from '@angular/core';
+import {
+    Component, DestroyRef, OnInit, signal, WritableSignal
+} from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Router, RouterLink } from '@angular/router';
-import { IonItemSliding, IonicModule } from '@ionic/angular';
+import { IonicModule, IonItemSliding } from '@ionic/angular';
 import { Offer } from 'src/app/models/offer.model';
 import { OffersService } from 'src/app/services/offers/offers.service';
-import { OfferItemComponent } from "../../components/offer-item/offer-item.component";
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+
+import { OfferItemComponent } from '../../components/offer-item/offer-item.component';
 
 @Component({
     selector: 'app-offers',
@@ -28,7 +31,7 @@ export class OffersPage implements OnInit {
             takeUntilDestroyed(this.destroyRef)
         ).subscribe((offers) => {
             this.loadedOffers.set(offers);
-        })
+        });
     }
 
     public onEdit(offerId: string, itemSliding: IonItemSliding): void {

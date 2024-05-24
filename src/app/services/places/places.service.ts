@@ -1,13 +1,15 @@
 import { Injectable } from '@angular/core';
+import {
+    BehaviorSubject, map, Observable, take
+} from 'rxjs';
 import { Place } from 'src/app/models/place.model';
+
 import { AuthService } from '../auth/auth.service';
-import { BehaviorSubject, Observable, filter, map, take } from 'rxjs';
 
 @Injectable({
     providedIn: 'root'
 })
 export class PlacesService {
-
     constructor(private readonly authService: AuthService) { }
 
     private defaultImg = 'https://static.wikia.nocookie.net/silent/images/b/b7/Toluca_Lake_View_Hotel.jpg';
@@ -36,16 +38,14 @@ export class PlacesService {
     ]);
 
     get places$() {
-        return this._places.asObservable(); //TO DO: try to look up to Signals
+        return this._places.asObservable(); // TO DO: try to look up to Signals
     }
 
     public getPlace(id: string): Observable<Place | null> {
         return this._places.pipe(
             take(1),
-            map((places) => {
-                return places.find(p => p.id === id) ?? null;
-            })
-        )
+            map((places) => places.find((p) => p.id === id) ?? null)
+        );
     }
 
     public addPlace(title: string, description: string, price: number, dateFrom: Date, dateTo: Date) {

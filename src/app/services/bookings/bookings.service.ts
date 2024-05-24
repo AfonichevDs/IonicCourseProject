@@ -1,5 +1,5 @@
-import { Injectable } from "@angular/core";
-import { Booking } from "src/app/models/bookings.model";
+import { Injectable } from '@angular/core';
+import { Booking } from 'src/app/models/bookings.model';
 
 @Injectable({
     providedIn: 'root'

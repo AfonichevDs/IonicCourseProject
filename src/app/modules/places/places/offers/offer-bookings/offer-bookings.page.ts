@@ -10,34 +10,34 @@ import { PlacesService } from 'src/app/services/places/places.service';
     selector: 'app-offer-bookings',
     templateUrl: './offer-bookings.page.html',
     standalone: true,
-    imports: [
-        IonicModule,
-        RouterLink
-    ]
+    imports: [IonicModule, RouterLink],
 })
 export class OfferBookingsPage implements OnInit {
-
     place: Place;
 
-    constructor(private route: ActivatedRoute,
+    constructor(
+        private route: ActivatedRoute,
         private navCtrl: NavController,
         private placesService: PlacesService,
         private destroyRef: DestroyRef
-    ) { }
+    ) {}
 
     ngOnInit() {
-        this.route.paramMap.subscribe(paramMap => {
+        this.route.paramMap.subscribe((paramMap) => {
             if (!paramMap.has('placeId')) {
                 this.navCtrl.navigateBack('/places/tabs/offers');
                 return;
             }
-            
-            this.placesService.getPlace(paramMap.get('placeId')!).pipe(
-                takeUntilDestroyed(this.destroyRef),
-                filter(data => data !== null)
-            ).subscribe(place => {
-                this.place = place!;
-            });
+
+            this.placesService
+                .getPlace(paramMap.get('placeId')!)
+                .pipe(
+                    takeUntilDestroyed(this.destroyRef),
+                    filter((data) => data !== null)
+                )
+                .subscribe((place) => {
+                    this.place = place!;
+                });
         });
     }
 }

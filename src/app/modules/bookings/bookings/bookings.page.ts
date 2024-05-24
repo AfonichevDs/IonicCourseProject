@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { IonItemSliding, IonicModule } from '@ionic/angular';
+import { IonicModule, IonItemSliding } from '@ionic/angular';
 import { Booking } from 'src/app/models/bookings.model';
 import { BookingsService } from 'src/app/services/bookings/bookings.service';
 
@@ -22,6 +22,6 @@ export class BookingsPage implements OnInit {
 
     public onCancelBooking(booking: string, sligingItem: IonItemSliding) {
         sligingItem.close();
-        //close booking
+        // close booking
     }
 }

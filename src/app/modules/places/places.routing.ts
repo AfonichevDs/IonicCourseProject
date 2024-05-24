@@ -12,40 +12,54 @@ export const placesRoutes: Routes = [
                 children: [
                     {
                         path: '',
-                        loadComponent: () => import('./places/discover/discover.page').then((m) => m.DiscoverPage)
+                        loadComponent: () =>
+                            import('./places/discover/discover.page').then((m) => m.DiscoverPage),
                     },
                     {
                         path: ':placeId',
-                        loadComponent: () => import('./places/discover/place-detail/place-detail.page').then((m) => m.PlaceDetailPage),
-                    }
-                ]
+                        loadComponent: () =>
+                            import('./places/discover/place-detail/place-detail.page').then(
+                                (m) => m.PlaceDetailPage
+                            ),
+                    },
+                ],
             },
             {
                 path: 'offers',
                 children: [
                     {
                         path: '',
-                        loadComponent: () => import('./places/offers/offers.page').then((m) => m.OffersPage)
+                        loadComponent: () =>
+                            import('./places/offers/offers.page').then((m) => m.OffersPage),
                     },
                     {
                         path: 'new-offer',
-                        loadComponent: () => import('./places/offers/new-offer/new-offer.page').then((m) => m.NewOfferPage)
+                        loadComponent: () =>
+                            import('./places/offers/new-offer/new-offer.page').then(
+                                (m) => m.NewOfferPage
+                            ),
                     },
                     {
-                        path: 'edit/:placeId',
-                        loadComponent: () => import('./places/offers/edit-offer/edit-offer.page').then((m) => m.EditOfferPage)
+                        path: 'edit/:offerId',
+                        loadComponent: () =>
+                            import('./places/offers/edit-offer/edit-offer.page').then(
+                                (m) => m.EditOfferPage
+                            ),
                     },
                     {
                         path: ':placeId',
-                        loadComponent: () => import('./places/offers/offer-bookings/offer-bookings.page').then((m) => m.OfferBookingsPage)
-                    }
-                ]
-            }
-        ]
+                        loadComponent: () =>
+                            import('./places/offers/offer-bookings/offer-bookings.page').then(
+                                (m) => m.OfferBookingsPage
+                            ),
+                    },
+                ],
+            },
+        ],
     },
     {
         path: '',
         redirectTo: '/places/tabs/discover',
-        pathMatch: 'full'
-    }
+        pathMatch: 'full',
+    },
 ];

@@ -1,10 +1,14 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { AbstractControl, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import {
+    Component, DestroyRef, OnInit
+} from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import {
+    AbstractControl, FormControl, FormGroup, ReactiveFormsModule, Validators
+} from '@angular/forms';
 import { Router } from '@angular/router';
-import { IonicModule } from '@ionic/angular';
+import { IonicModule, LoadingController } from '@ionic/angular';
 import { OffersService } from 'src/app/services/offers/offers.service';
-import { PlacesService } from 'src/app/services/places/places.service';
 import { DateTimeButtonComponent } from 'src/app/shared/components/date-time-button/date-time-button.component';
 
 @Component({
@@ -23,8 +27,11 @@ export class NewOfferPage implements OnInit {
 
     showCalendar: boolean;
 
-    constructor(private readonly offersService: OffersService,
-        private readonly router: Router
+    constructor(
+        private readonly offersService: OffersService,
+        private readonly router: Router,
+        private loadingCtrl: LoadingController,
+        private destroyRef: DestroyRef
     ) { }
 
     ngOnInit() {
@@ -50,23 +57,28 @@ export class NewOfferPage implements OnInit {
                 validators: [Validators.required]
             })
         });
-
     }
 
     onCreateOffer() {
         if (!this.form.valid) {
             return;
         }
-
-        this.offersService.addOffer(
-            this.form.value.title,
-            this.form.value.description,
-            this.form.value.price,
-            new Date(this.form.value.dateFrom),
-            new Date(this.form.value.dateTo)
-        );
-        this.form.reset();
-        this.router.navigate(['/places/tabs/offers']);
+        this.loadingCtrl.create({
+            message: 'Creating offer...'
+        }).then((loadingEl) => {
+            loadingEl.present();
+            this.offersService.addOffer(
+                this.form.value.title,
+                this.form.value.description,
+                this.form.value.price,
+                new Date(this.form.value.dateFrom),
+                new Date(this.form.value.dateTo)
+            ).pipe(takeUntilDestroyed(this.destroyRef)).subscribe(() => {
+                loadingEl.dismiss();
+                this.form.reset();
+                this.router.navigate(['/places/tabs/offers']);
+            });
+        });
     }
 
     openCalendar() {

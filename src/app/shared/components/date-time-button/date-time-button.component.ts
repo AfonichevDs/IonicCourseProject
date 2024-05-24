@@ -1,9 +1,11 @@
-import { CommonModule, DatePipe } from "@angular/common";
-import { ChangeDetectionStrategy, Component, Input, OnInit, forwardRef } from "@angular/core";
-import { ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR } from "@angular/forms";
-import { RouterLink } from "@angular/router";
-import { IonicModule } from "@ionic/angular";
-import { BehaviorSubject } from "rxjs";
+import { CommonModule } from '@angular/common';
+import {
+    ChangeDetectionStrategy, Component, forwardRef, Input, OnInit
+} from '@angular/core';
+import { ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { RouterLink } from '@angular/router';
+import { IonicModule } from '@ionic/angular';
+import { BehaviorSubject } from 'rxjs';
 
 @Component({
     selector: 'date-time-button',
@@ -24,7 +26,6 @@ import { BehaviorSubject } from "rxjs";
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DateTimeButtonComponent implements OnInit, ControlValueAccessor {
-
     public dateControl = new FormControl<string>('');
 
     @Input({ required: true }) id: string;

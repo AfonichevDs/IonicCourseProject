@@ -16,7 +16,6 @@ import { Offer } from 'src/app/models/offer.model';
     ]
 })
 export class OfferItemComponent implements OnInit {
-
     @Input({ required: true }) public offer: Offer;
 
     ngOnInit(): void {
@@ -25,5 +24,4 @@ export class OfferItemComponent implements OnInit {
     getDate() {
         return new Date();
     }
-
 }

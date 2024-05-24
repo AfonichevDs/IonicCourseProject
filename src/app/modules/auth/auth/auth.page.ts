@@ -1,6 +1,10 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, OnInit, WritableSignal, signal } from '@angular/core';
-import { FormControl, FormGroup, FormsModule, NgForm, ReactiveFormsModule, Validators } from '@angular/forms';
+import {
+    ChangeDetectionStrategy, Component, OnInit, signal, WritableSignal
+} from '@angular/core';
+import {
+    FormControl, FormGroup, FormsModule, NgForm, ReactiveFormsModule, Validators
+} from '@angular/forms';
 import { Router } from '@angular/router';
 import { IonicModule, LoadingController } from '@ionic/angular';
 import { AuthService } from 'src/app/services/auth/auth.service';
@@ -19,7 +23,6 @@ import { AuthService } from 'src/app/services/auth/auth.service';
     ]
 })
 export class AuthPage implements OnInit {
-
     isLogin: WritableSignal<boolean> = signal(true);
 
     authForm = new FormGroup({
@@ -46,7 +49,7 @@ export class AuthPage implements OnInit {
         this.loadingCtrl.create({
             keyboardClose: true,
             message: 'Logging in...'
-        }).then(loadingEl => {
+        }).then((loadingEl) => {
             loadingEl.present();
             setTimeout(() => {
                 loadingEl.dismiss();
@@ -56,17 +59,16 @@ export class AuthPage implements OnInit {
     }
 
     onSubmit(form: NgForm) {
-        if(!form.valid) {
+        if (!form.valid) {
             return;
         }
-        
+
         const email = this.emailCtrl.value;
         const password = this.passwordCtrl.value;
 
-        if(this.isLogin()) {
-            //send login request
-        }
-        else {
+        if (this.isLogin()) {
+            // send login request
+        } else {
 
         }
     }

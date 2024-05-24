@@ -1,7 +1,10 @@
 import { Injectable } from '@angular/core';
+import {
+    BehaviorSubject, debounceTime, delay, map, Observable, take, tap
+} from 'rxjs';
 import { Offer } from 'src/app/models/offer.model';
+
 import { AuthService } from '../auth/auth.service';
-import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
     providedIn: 'root'
@@ -30,8 +33,14 @@ export class OffersService {
             new Date('2024-12-31'),
             '1'
         )
-    ])
+    ]);
 
+    public getOffer(id: string): Observable<Offer | null> {
+        return this._offers.pipe(
+            take(1),
+            map((offers) => offers.find((p) => p.id === id) ?? null)
+        );
+    }
 
     get offers$() {
         return this._offers.asObservable();
@@ -51,7 +60,33 @@ export class OffersService {
             dateTo,
             this.authService.userId
         );
-        
-        this._offers.next(this._offers.value.concat(newOffer));
+
+        return this._offers.pipe(
+            debounceTime(1500),
+            tap((data) => {
+                this._offers.next(data.concat(newOffer));
+            })
+        );
+    }
+
+    public updateOffer(placeId: string, title: string, description: string) {
+        return this.offers$.pipe(
+            take(1),
+            delay(1500),
+            tap((offers) => {
+                const updatedOfferIndex = offers.findIndex((o) => o.id === placeId);
+                const updatedOffers = [...offers];
+
+                const old = updatedOffers[updatedOfferIndex];
+
+                const updatedOffer = { ...old };
+                updatedOffer.title = title;
+                updatedOffer.description = description;
+
+                updatedOffers[updatedOfferIndex] = updatedOffer;
+
+                this._offers.next(updatedOffers);
+            })
+        );
     }
 }
