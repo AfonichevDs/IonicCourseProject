@@ -35,8 +35,9 @@ export class DiscoverPage implements OnInit {
         if (event.detail.value === 'all') {
             this.relevantPlaces.set(this.loadedPlaces());
         } else {
-            this.relevantPlaces.set(this.loadedPlaces().filter(
-                (place) => place.userId !== this.authService.userId));
+            this.relevantPlaces.set(
+                this.loadedPlaces().filter((place) => place.userId !== this.authService.userId)
+            );
         }
         console.log(this.relevantPlaces());
     }

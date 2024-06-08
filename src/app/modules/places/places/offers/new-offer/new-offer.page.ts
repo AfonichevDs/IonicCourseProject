@@ -10,6 +10,7 @@ import { Router } from '@angular/router';
 import { IonicModule, LoadingController } from '@ionic/angular';
 import { OffersService } from 'src/app/services/offers/offers.service';
 import { DateTimeButtonComponent } from 'src/app/shared/components/date-time-button/date-time-button.component';
+import { LocationPickerComponent } from 'src/app/shared/components/location-picker/location-picker.component';
 
 @Component({
     selector: 'app-new',
@@ -18,7 +19,8 @@ import { DateTimeButtonComponent } from 'src/app/shared/components/date-time-but
         IonicModule,
         ReactiveFormsModule,
         CommonModule,
-        DateTimeButtonComponent
+        DateTimeButtonComponent,
+        LocationPickerComponent
     ],
     templateUrl: './new-offer.page.html',
 })
