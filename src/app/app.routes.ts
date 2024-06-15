@@ -1,6 +1,7 @@
 import { Routes } from '@angular/router';
 
 import { authGuard } from './guards/auth.guard';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
 
 export const routes: Routes = [
     {

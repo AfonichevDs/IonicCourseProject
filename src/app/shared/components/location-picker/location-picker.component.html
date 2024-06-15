@@ -1,6 +1,12 @@
-<div>
+<div class="picker">
+    @if(selectedLocationImage()) {
+    <ion-img class="location-image" [src]="selectedLocationImage()"></ion-img>
+    } @else if(!(isLoading())) {
     <ion-button color="primary" (click)="pickLocation()">
         <ion-icon name="map" slot="start"></ion-icon>
         <ion-label>Select location</ion-label>
     </ion-button>
+    } @else {
+    <ion-spinner color="primary"></ion-spinner>
+    }
 </div>

@@ -9,6 +9,7 @@ import { AppComponent } from './app/app.component';
 import { routes } from './app/app.routes';
 // import { AppModule } from './app/app.module';
 import { environment } from './environments/environment';
+import { provideHttpClient } from '@angular/common/http';
 
 if (environment.production) {
     enableProdMode();
@@ -17,6 +18,7 @@ if (environment.production) {
 const providers = [
     provideRouter(routes, withPreloading(PreloadAllModules)),
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
+    provideHttpClient(),
     importProvidersFrom(
         IonicModule.forRoot({})
     )
