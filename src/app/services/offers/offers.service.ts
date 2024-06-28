@@ -5,6 +5,7 @@ import {
 import { Offer } from 'src/app/models/offer.model';
 
 import { AuthService } from '../auth/auth.service';
+import { PlaceLocation } from 'src/app/models/location.model';
 
 @Injectable({
     providedIn: 'root'
@@ -49,7 +50,7 @@ export class OffersService {
     constructor(private readonly authService: AuthService) {
     }
 
-    public addOffer(title: string, description: string, price: number, dateFrom: Date, dateTo: Date) {
+    public addOffer(title: string, description: string, price: number, dateFrom: Date, dateTo: Date, location: PlaceLocation) {
         const newOffer = new Offer(
             Math.random().toString(),
             title,
@@ -58,7 +59,8 @@ export class OffersService {
             price,
             dateFrom,
             dateTo,
-            this.authService.userId
+            this.authService.userId,
+            location
         );
 
         return this._offers.pipe(

@@ -4,7 +4,7 @@
 
 export const environment = {
     production: false,
-    mapsKey: ''
+    mapsKey: 'AIzaSyC0IiiLip2YBXsmCStRzeAxbZU3El5FvUY'
 };
 
 /*

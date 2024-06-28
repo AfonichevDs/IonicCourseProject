@@ -3,7 +3,9 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { IonicModule, NavController } from '@ionic/angular';
 import { filter } from 'rxjs';
+import { Offer } from 'src/app/models/offer.model';
 import { Place } from 'src/app/models/place.model';
+import { OffersService } from 'src/app/services/offers/offers.service';
 import { PlacesService } from 'src/app/services/places/places.service';
 
 @Component({
@@ -13,12 +15,12 @@ import { PlacesService } from 'src/app/services/places/places.service';
     imports: [IonicModule, RouterLink],
 })
 export class OfferBookingsPage implements OnInit {
-    place: Place;
+    offer: Offer;
 
     constructor(
         private route: ActivatedRoute,
         private navCtrl: NavController,
-        private placesService: PlacesService,
+        private placesService: OffersService,
         private destroyRef: DestroyRef
     ) {}
 
@@ -30,13 +32,13 @@ export class OfferBookingsPage implements OnInit {
             }
 
             this.placesService
-                .getPlace(paramMap.get('placeId')!)
+                .getOffer(paramMap.get('placeId')!)
                 .pipe(
                     takeUntilDestroyed(this.destroyRef),
                     filter((data) => data !== null)
                 )
-                .subscribe((place) => {
-                    this.place = place!;
+                .subscribe((offer) => {
+                    this.offer = offer!;
                 });
         });
     }

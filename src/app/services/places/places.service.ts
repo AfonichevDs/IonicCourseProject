@@ -1,18 +1,18 @@
 import { Injectable } from '@angular/core';
-import {
-    BehaviorSubject, map, Observable, take
-} from 'rxjs';
+import { BehaviorSubject, map, Observable, take } from 'rxjs';
 import { Place } from 'src/app/models/place.model';
 
 import { AuthService } from '../auth/auth.service';
+import { PlaceLocation } from 'src/app/models/location.model';
 
 @Injectable({
-    providedIn: 'root'
+    providedIn: 'root',
 })
 export class PlacesService {
-    constructor(private readonly authService: AuthService) { }
+    constructor(private readonly authService: AuthService) {}
 
-    private defaultImg = 'https://static.wikia.nocookie.net/silent/images/b/b7/Toluca_Lake_View_Hotel.jpg';
+    private defaultImg =
+        'https://static.wikia.nocookie.net/silent/images/b/b7/Toluca_Lake_View_Hotel.jpg';
 
     private _places = new BehaviorSubject<Place[]>([
         new Place(
@@ -34,7 +34,7 @@ export class PlacesService {
             new Date('2024-01-02'),
             new Date('2024-12-31'),
             '2'
-        )
+        ),
     ]);
 
     get places$() {
@@ -48,7 +48,14 @@ export class PlacesService {
         );
     }
 
-    public addPlace(title: string, description: string, price: number, dateFrom: Date, dateTo: Date) {
+    public addPlace(
+        title: string,
+        description: string,
+        price: number,
+        dateFrom: Date,
+        dateTo: Date,
+        location: PlaceLocation
+    ) {
         const newPlace = new Place(
             Math.random().toString(),
             title,
@@ -57,7 +64,8 @@ export class PlacesService {
             price,
             dateFrom,
             dateTo,
-            this.authService.userId
+            this.authService.userId,
+            location
         );
 
         this._places.next(this._places.value.concat(newPlace));

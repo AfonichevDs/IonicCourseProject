@@ -18,7 +18,7 @@ export class GeoService {
             )
             .pipe(
                 map(({ results, status }) => {
-                    if (status !== GoogleMap.GeocoderStatus.OK || results.length === 0) {
+                    if (status !== "OK" || results.length === 0) {
                         return '';
                     }
                     return results[0].formatted_address;

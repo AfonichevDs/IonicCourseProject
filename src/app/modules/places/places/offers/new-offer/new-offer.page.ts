@@ -8,6 +8,7 @@ import {
 } from '@angular/forms';
 import { Router } from '@angular/router';
 import { IonicModule, LoadingController } from '@ionic/angular';
+import { PlaceLocation } from 'src/app/models/location.model';
 import { OffersService } from 'src/app/services/offers/offers.service';
 import { DateTimeButtonComponent } from 'src/app/shared/components/date-time-button/date-time-button.component';
 import { LocationPickerComponent } from 'src/app/shared/components/location-picker/location-picker.component';
@@ -57,6 +58,10 @@ export class NewOfferPage implements OnInit {
             dateTo: new FormControl(null, {
                 updateOn: 'blur',
                 validators: [Validators.required]
+            }),
+            location: new FormControl(null, {
+                updateOn: 'blur',
+                validators: [Validators.required]
             })
         });
     }
@@ -74,7 +79,8 @@ export class NewOfferPage implements OnInit {
                 this.form.value.description,
                 this.form.value.price,
                 new Date(this.form.value.dateFrom),
-                new Date(this.form.value.dateTo)
+                new Date(this.form.value.dateTo),
+                this.form.value.location
             ).pipe(takeUntilDestroyed(this.destroyRef)).subscribe(() => {
                 loadingEl.dismiss();
                 this.form.reset();
@@ -92,6 +98,10 @@ export class NewOfferPage implements OnInit {
 
     dateFromChanged(value: any) {
         console.log(value);
+    }
+
+    onLocationPick(location: PlaceLocation) {
+        this.form.patchValue({location: location});
     }
 
     get dateFromControl(): AbstractControl<any, any> | null {

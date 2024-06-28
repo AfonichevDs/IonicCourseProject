@@ -19,14 +19,24 @@
                 <p>{{place.description}}</p>
             </ion-col>
         </ion-row>
+        <ion-row>
+            <ion-col size-sm="6" offset-sm="3" class="ion-text-center ion-padding">
+                <p>{{place.location?.address}}</p>
+            </ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-col size-sm="6" offset-sm="3" class="ion-text-center ion-padding">
+                <p>{{place.location?.staticMapImageUrl}}</p>
+            </ion-col>
+        </ion-row>
         @if(isBookable()) {
-            <ion-row>
-                <ion-col size-sm="6" offset-sm="3" class="ion-text-center">
-                    <ion-button color="primary" class="ion-margin" (click)="onBookPlace()"
-                        >Book</ion-button
-                    >
-                </ion-col>
-            </ion-row>
+        <ion-row>
+            <ion-col size-sm="6" offset-sm="3" class="ion-text-center">
+                <ion-button color="primary" class="ion-margin" (click)="onBookPlace()"
+                    >Book</ion-button
+                >
+            </ion-col>
+        </ion-row>
         }
     </ion-grid>
 </ion-content>

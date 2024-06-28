@@ -38,8 +38,6 @@ export class MapModalComponent {
             lat: event.latLng?.lat(),
             lng: event.latLng?.lng()
         }
-        console.log(event.latLng?.lat());
-        console.log(event.latLng?.lng());
 
         this.modalCtrl.dismiss(coordinates);
     }
