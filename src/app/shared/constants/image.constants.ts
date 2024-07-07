@@ -1,0 +1,1 @@
+export const blobPrefix = 'data:image/jpeg;base64,';

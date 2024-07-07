@@ -8,10 +8,12 @@
     ></ion-img>
     } @else if(!(isLoading())) {
     <ion-button color="primary" (click)="pickImage()">
-        <ion-icon name="icon" slot="start"></ion-icon>
-        <ion-label>Take </ion-label>
+        <ion-icon name="camera-outline" slot="start"></ion-icon>
+        <ion-label>Take picture</ion-label>
     </ion-button>
     } @else {
     <ion-spinner color="primary"></ion-spinner>
     }
 </div>
+
+<input type="file" *ngIf="usePicker()" #filePicker (change)="onFileChosen($event)"/>
